@@ -51,8 +51,18 @@ export default class MusicAPI {
    * Get song information given an id
    */
   static getSongInfo = (id) => {
-    // TODO: Implement!
-    return null;
+    let requestUrl = BASE_URL + "/songs/" + id;
+    return  axios.get(requestUrl)
+      .then(function(res) {
+          let result = res.data.data;
+
+          let song = new Song(result.id, result.name, result.artist, result.album, result.releaseDate, result.duration, result.url, result.image);
+          return song;
+      })
+      .catch(function (error) {
+        MusicAPI.handleError(error);
+      });
+
   }
 
   /**
